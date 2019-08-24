@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-   /* private void readItems() {
+    private void readItems() {
         File filesDir = getFilesDir();
         File todoFile = new File(filesDir, "todo.txt");
         try {
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 }
 
 
