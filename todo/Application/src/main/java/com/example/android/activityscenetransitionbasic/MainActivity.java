@@ -45,7 +45,7 @@ import java.util.ArrayList;
  * user clicks on an item, {@link DetailActivity} is launched, using the Activity Scene Transitions
  * framework to animatedly do so.
  */
-public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
+public class MainActivity extends Activity {//implements AdapterView.OnItemClickListener {
 
     private GridView mGridView;
     private GridAdapter mAdapter;
@@ -58,10 +58,12 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
         // Setup the GridView and set the adapter
         mGridView = (GridView) findViewById(R.id.grid);
-        mGridView.setOnItemClickListener(this);
-
+       // mGridView.setOnItemClickListener(this);
         mAdapter = new GridAdapter();
         mGridView.setAdapter(mAdapter);
+        mGridView.setOnTouchListener(swipeDetector);
+
+        SetupGridViewListener();
     }
 
     public void onAddItem(View v) {
@@ -69,7 +71,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
        String itemText = etNewItem.getText().toString();
        etNewItem.setText("");
 
-       Item newItem = new Item(itemText,"God","flying_in_the_light.jpg");
+       Item newItem = new Item(itemText,"God","caterpillar.jpg");
        Item.items.add(newItem);
 
 
@@ -89,23 +91,36 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
      * Called when an item in the {@link android.widget.GridView} is clicked. Here will launch the
      * {@link DetailActivity}, using the Scene Transition animation functionality.
      */
-    @Override
+
+    public void SetupGridViewListener () {
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position,
+                                    long id) {
+
+                if (swipeDetector.swipeDetected()){
+                    if (swipeDetector.getAction() == SwipeDetector.Action.LEFT_TO_RIGHT ||
+                            swipeDetector.getAction() == SwipeDetector.Action.RIGHT_TO_LEFT)
+                    {
+                        Item.items.remove(Item.items.get(position));
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }
+
+                else {
+
+                    //FIXME go into item
+                }
+
+            }
+
+        });
+
+    }
+    /*@Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-        if (swipeDetector.swipeDetected()) {
-            Item newItem = new Item("test","God","flying_in_the_light.jpg");
-            Item.items.add(newItem);
-            if (swipeDetector.getAction() == SwipeDetector.Action.LEFT_TO_RIGHT ||
-                    swipeDetector.getAction() == SwipeDetector.Action.RIGHT_TO_LEFT)
-            {
-                Item.items.remove(Item.items.get(position));
-
-                /*msg.what = MSG_ANIMATION_REMOVE;
-                msg.arg2 = swipeDetector.getAction() == SwipeDetector.Action.LR ? 1 : 0;
-                msg.obj = view;*/
-            }
-        }
-        else {
             Item item = (Item) adapterView.getItemAtPosition(position);
 
             // Construct an Intent as normal
@@ -118,7 +133,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
              * {@link ActivityOptionsCompat#makeSceneTransitionAnimation(Activity, Pair[])} factory
              * method.
              */
-            ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
+           /* ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
                     this,
 
                     // Now we provide a list of Pair items which contain the view we can transitioning
@@ -131,10 +146,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             // Now we can start the Activity, providing the activity options as a bundle
             ActivityCompat.startActivity(this, intent, activityOptions.toBundle());
             // END_INCLUDE(start_activity)
-        }
-
-
-    }
+    }*/
 
     /**
      * {@link android.widget.BaseAdapter} which displays items.
