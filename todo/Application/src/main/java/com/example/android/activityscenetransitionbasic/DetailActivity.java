@@ -28,6 +28,8 @@ import android.widget.TextView;
 
 import java.util.Iterator;
 
+
+
 /**
  * Our secondary Activity which is launched from {@link MainActivity}. Has a simple detail UI
  * which has a large banner image, title and body text.
@@ -42,6 +44,9 @@ public class DetailActivity extends Activity {
 
     // View name of the header title. Used for activity scene transitions
     public static final String VIEW_NAME_HEADER_TITLE = "detail:header:title";
+
+
+
 
     private ImageView mHeaderImageView;
     private TextView mHeaderTitle;

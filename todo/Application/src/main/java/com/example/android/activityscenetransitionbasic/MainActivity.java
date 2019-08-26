@@ -16,9 +16,7 @@
 
 package com.example.android.activityscenetransitionbasic;
 
-import com.example.android.activityscenetransitionbasic.DetailActivity;
-import com.example.android.activityscenetransitionbasic.Item;
-import com.example.android.activityscenetransitionbasic.R;
+
 import com.squareup.picasso.Picasso;
 
 import android.app.Activity;
@@ -36,7 +34,11 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.apache.commons.io.FileUtils;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
 
 /**
  * Our main Activity in this sample. Displays a grid of items which an image and title. When the
@@ -47,6 +49,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
     private GridView mGridView;
     private GridAdapter mAdapter;
+    final SwipeDetector swipeDetector = new SwipeDetector();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         // Setup the GridView and set the adapter
         mGridView = (GridView) findViewById(R.id.grid);
         mGridView.setOnItemClickListener(this);
+
         mAdapter = new GridAdapter();
         mGridView.setAdapter(mAdapter);
     }
@@ -66,8 +70,19 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
        etNewItem.setText("");
 
        Item newItem = new Item(itemText,"God","flying_in_the_light.jpg");
-      // items.add(newItem);
-        Item.items.add(newItem);
+       Item.items.add(newItem);
+
+
+    }
+
+    private void readItems() {
+        File filesDir = getFilesDir();
+        File todoFile = new File(filesDir, "todo.txt");
+        /*try {
+            items = new ArrayList<String>(FileUtils.readLines(todoFile));
+        } catch (IOException e) {
+            items = new ArrayList<String>();
+        }*/
     }
 
     /**
@@ -76,31 +91,49 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
      */
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        Item item = (Item) adapterView.getItemAtPosition(position);
 
-        // Construct an Intent as normal
-        Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra(DetailActivity.EXTRA_PARAM_ID, item.getId());
+        if (swipeDetector.swipeDetected()) {
+            Item newItem = new Item("test","God","flying_in_the_light.jpg");
+            Item.items.add(newItem);
+            if (swipeDetector.getAction() == SwipeDetector.Action.LEFT_TO_RIGHT ||
+                    swipeDetector.getAction() == SwipeDetector.Action.RIGHT_TO_LEFT)
+            {
+                Item.items.remove(Item.items.get(position));
 
-        // BEGIN_INCLUDE(start_activity)
-        /**
-         * Now create an {@link android.app.ActivityOptions} instance using the
-         * {@link ActivityOptionsCompat#makeSceneTransitionAnimation(Activity, Pair[])} factory
-         * method.
-         */
-        ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                this,
+                /*msg.what = MSG_ANIMATION_REMOVE;
+                msg.arg2 = swipeDetector.getAction() == SwipeDetector.Action.LR ? 1 : 0;
+                msg.obj = view;*/
+            }
+        }
+        else {
+            Item item = (Item) adapterView.getItemAtPosition(position);
 
-                // Now we provide a list of Pair items which contain the view we can transitioning
-                // from, and the name of the view it is transitioning to, in the launched activity
-                new Pair<View, String>(view.findViewById(R.id.imageview_item),
-                        DetailActivity.VIEW_NAME_HEADER_IMAGE),
-                new Pair<View, String>(view.findViewById(R.id.textview_name),
-                        DetailActivity.VIEW_NAME_HEADER_TITLE));
+            // Construct an Intent as normal
+            Intent intent = new Intent(this, DetailActivity.class);
+            intent.putExtra(DetailActivity.EXTRA_PARAM_ID, item.getId());
 
-        // Now we can start the Activity, providing the activity options as a bundle
-        ActivityCompat.startActivity(this, intent, activityOptions.toBundle());
-        // END_INCLUDE(start_activity)
+            // BEGIN_INCLUDE(start_activity)
+            /**
+             * Now create an {@link android.app.ActivityOptions} instance using the
+             * {@link ActivityOptionsCompat#makeSceneTransitionAnimation(Activity, Pair[])} factory
+             * method.
+             */
+            ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    this,
+
+                    // Now we provide a list of Pair items which contain the view we can transitioning
+                    // from, and the name of the view it is transitioning to, in the launched activity
+                    new Pair<View, String>(view.findViewById(R.id.imageview_item),
+                            DetailActivity.VIEW_NAME_HEADER_IMAGE),
+                    new Pair<View, String>(view.findViewById(R.id.textview_name),
+                            DetailActivity.VIEW_NAME_HEADER_TITLE));
+
+            // Now we can start the Activity, providing the activity options as a bundle
+            ActivityCompat.startActivity(this, intent, activityOptions.toBundle());
+            // END_INCLUDE(start_activity)
+        }
+
+
     }
 
     /**
