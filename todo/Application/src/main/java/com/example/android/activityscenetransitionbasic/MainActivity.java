@@ -73,7 +73,7 @@ public class MainActivity extends Activity {//implements AdapterView.OnItemClick
 
        Item newItem = new Item(itemText,"God","caterpillar.jpg");
        Item.items.add(newItem);
-
+       mAdapter.notifyDataSetChanged();
 
     }
 
@@ -105,6 +105,7 @@ public class MainActivity extends Activity {//implements AdapterView.OnItemClick
                     {
                         Item.items.remove(Item.items.get(position));
                         mAdapter.notifyDataSetChanged();
+
                     }
                 }
 
