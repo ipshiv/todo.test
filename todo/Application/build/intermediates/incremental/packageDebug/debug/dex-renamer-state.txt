@@ -1,4 +1,4 @@
-#Tue Aug 27 00:42:21 MSK 2019
+#Tue Aug 27 22:16:46 MSK 2019
 base.0=E\:\\git projects\\todo\\Application\\build\\intermediates\\transforms\\dexMerger\\debug\\0
 path.0=classes.dex
 renamed.0=classes.dex
