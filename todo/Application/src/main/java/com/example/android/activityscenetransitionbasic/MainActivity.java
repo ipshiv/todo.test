@@ -35,6 +35,7 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.apache.commons.io.FileUtils;
@@ -49,7 +50,7 @@ import java.io.File;
  */
 public class MainActivity extends Activity {//implements AdapterView.OnItemClickListener {
 
-    private GridView mGridView;
+    private ListView mListView;
     private GridAdapter mAdapter;
     final SwipeDetector swipeDetector = new SwipeDetector();
 
@@ -59,11 +60,11 @@ public class MainActivity extends Activity {//implements AdapterView.OnItemClick
         setContentView(R.layout.grid);
 
         // Setup the GridView and set the adapter
-        mGridView = (GridView) findViewById(R.id.grid);
+        mListView = (ListView) findViewById(R.id.mListView);
        // mGridView.setOnItemClickListener(this);
         mAdapter = new GridAdapter();
-        mGridView.setAdapter(mAdapter);
-        mGridView.setOnTouchListener(swipeDetector);
+        mListView.setAdapter(mAdapter);
+        mListView.setOnTouchListener(swipeDetector);
 
         SetupGridViewListener();
     }
@@ -106,7 +107,7 @@ public class MainActivity extends Activity {//implements AdapterView.OnItemClick
      */
 
     public void SetupGridViewListener () {
-        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position,
