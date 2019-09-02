@@ -21,6 +21,8 @@ import com.squareup.picasso.Picasso;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -53,9 +55,12 @@ public class MainActivity extends Activity {//implements AdapterView.OnItemClick
     private ListView mListView;
     private GridAdapter mAdapter;
     final SwipeDetector swipeDetector = new SwipeDetector();
+    SQLiteDatabase db;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        db = getBaseContext().openOrCreateDatabase("app.db", MODE_PRIVATE, null);
+        db.execSQL("CREATE TABLE IF NOT EXISTS itemsDb (name TEXT, author TEXT, file TEXT, id INTEGER)");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.grid);
 
@@ -66,7 +71,42 @@ public class MainActivity extends Activity {//implements AdapterView.OnItemClick
         mListView.setAdapter(mAdapter);
         mListView.setOnTouchListener(swipeDetector);
 
+        GetItemsFromBd();
+
         SetupGridViewListener();
+    }
+
+    private void AddItemToBd(Item item)
+    {
+        String name =  item.getName();
+        String author = item.getAuthor();
+        String fileName = item.getPhotoUrl();
+        int id = item.getId();
+        db.execSQL("INSERT INTO itemsDb VALUES ('" + name + "','" + author + "','" + fileName + "'," + id + ");");
+        //db.execSQL("INSERT INTO users VALUES (@name, @author, @fileName,@id);");
+    }
+
+    private void GetItemsFromBd()
+    {
+        Cursor query = db.rawQuery("SELECT * FROM itemsDb;", null);
+        String name = "";
+        String author = "";
+        String fileName = "";
+
+        if(query.moveToFirst()){
+            do {
+                name = query.getString(0);
+                author = query.getString(1);
+                fileName = query.getString(2);
+                //int id = query.getInt(3);
+                Item item = new Item(name, author, fileName);
+                Item.items.add(item);
+                mAdapter.notifyDataSetChanged();
+            }
+            while(query.moveToNext());
+            query.close();
+           // db.close();
+        }
     }
 
     public void onAddItem(View v) {
@@ -75,8 +115,13 @@ public class MainActivity extends Activity {//implements AdapterView.OnItemClick
        etNewItem.setText("");
 
        Item newItem = new Item(itemText,"God","caterpillar.jpg");
+
+       /*Add to Item list*/
        Item.items.add(newItem);
        mAdapter.notifyDataSetChanged();
+
+       /*Add to BD*/
+       AddItemToBd(newItem);
 
     }
 

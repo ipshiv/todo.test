@@ -26,7 +26,6 @@ import android.transition.Transition;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.Iterator;
 
 
 
