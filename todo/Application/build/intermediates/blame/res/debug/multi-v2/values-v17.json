@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "E:\\git projects\\todo\\Application\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v17\\values-v17.xml",
+            "outputFile": "/home/ipshiv/AndroidStudioProjects/todo.test/todo/Application/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v17/values-v17.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\rnd\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.0.2.aar\\0e8366f4aca7fbf183e4527eff8f9f2f\\res\\values-v17\\values-v17.xml",
+                    "source": "/home/ipshiv/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/2dbfc232562434a9f8534cc090c8f62a/res/values-v17/values-v17.xml",
                     "from": {
                         "startLines": "2,5,9,12,15,18,22,26,29,32,35,39,42,46",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4",

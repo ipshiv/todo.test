@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "E:\\git projects\\todo\\Application\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-be\\values-be.xml",
+            "outputFile": "/home/ipshiv/AndroidStudioProjects/todo.test/todo/Application/build/intermediates/incremental/mergeDebugResources/merged.dir/values-be/values-be.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\rnd\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.0.2.aar\\0e8366f4aca7fbf183e4527eff8f9f2f\\res\\values-be\\values-be.xml",
+                    "source": "/home/ipshiv/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/2dbfc232562434a9f8534cc090c8f62a/res/values-be/values-be.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\rnd\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.0.2.aar\\e43124e9cdadb309be9ec906708592da\\res\\values-be\\values-be.xml",
+                    "source": "/home/ipshiv/.gradle/caches/transforms-1/files-1.1/support-compat-27.0.2.aar/3f51bd51eda2eb1dc610104883d5aeaa/res/values-be/values-be.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

@@ -17,6 +17,8 @@
 package com.example.android.activityscenetransitionbasic;
 
 
+import com.example.android.activityscenetransitionbasic.adapter.GridAdapter;
+import com.example.android.activityscenetransitionbasic.model.Item;
 import com.squareup.picasso.Picasso;
 
 import android.app.Activity;
@@ -35,12 +37,10 @@ import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.apache.commons.io.FileUtils;
 import java.io.File;
 
 
@@ -136,16 +136,6 @@ public class MainActivity extends Activity {//implements AdapterView.OnItemClick
         return animation;
     }
 
-    private void readItems() {
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
-        /*try {
-            items = new ArrayList<String>(FileUtils.readLines(todoFile));
-        } catch (IOException e) {
-            items = new ArrayList<String>();
-        }*/
-    }
-
     /**
      * Called when an item in the {@link android.widget.GridView} is clicked. Here will launch the
      * {@link DetailActivity}, using the Scene Transition animation functionality.
@@ -197,43 +187,4 @@ public class MainActivity extends Activity {//implements AdapterView.OnItemClick
 
     }
 
-    /**
-     * {@link android.widget.BaseAdapter} which displays items.
-     */
-    private class GridAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return Item.items.size();
-        }
-
-        @Override
-        public Item getItem(int position) {
-            return Item.items.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return getItem(position).getId();
-        }
-
-        @Override
-        public View getView(int position, View view, ViewGroup viewGroup) {
-            if (view == null) {
-                view = getLayoutInflater().inflate(R.layout.grid_item, viewGroup, false);
-            }
-
-            final Item item = getItem(position);
-
-            // Load the thumbnail image
-            ImageView image = (ImageView) view.findViewById(R.id.imageview_item);
-            Picasso.with(image.getContext()).load(item.getThumbnailUrl()).into(image);
-
-            // Set the TextView's contents
-            TextView name = (TextView) view.findViewById(R.id.textview_name);
-            name.setText(item.getName());
-
-            return view;
-        }
-    }
 }

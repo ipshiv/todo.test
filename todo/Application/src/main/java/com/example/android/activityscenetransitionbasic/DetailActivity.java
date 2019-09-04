@@ -16,6 +16,7 @@
 
 package com.example.android.activityscenetransitionbasic;
 
+import com.example.android.activityscenetransitionbasic.model.Item;
 import com.squareup.picasso.Picasso;
 
 import android.app.Activity;
